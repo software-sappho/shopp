@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   resources :products
+  resource :cart, only: :show do
+    delete :empty
+  end
+  resources :line_items, only: [:create, :destroy]
   devise_for :users, controllers: {
     registrations: 'registrations'
   }

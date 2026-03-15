@@ -2,6 +2,7 @@ class Product < ApplicationRecord
  
   before_destroy :not_referenced_by_any_line_item
   belongs_to :user, optional: true
+  has_many :line_items, dependent: :destroy
 
   mount_uploader :image, ImageUploader
   serialize :image, JSON # If you use SQLite, add this line
@@ -16,5 +17,11 @@ class Product < ApplicationRecord
   BRAND = %w{ Ferrari Opel Lenovo Fossil}
   FINISH = %w{ Black White Navy Blue Red Clear Satin Yellow Seafoam }
   CONDITION = %w{ New Excellent Mint Used Fair Poor }
+
+  private
+
+  def not_referenced_by_any_line_item
+    true
+  end
 
 end

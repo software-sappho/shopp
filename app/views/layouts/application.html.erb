@@ -10,7 +10,6 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
    <body class="<%= yield (:body_class) %>">
     <% if flash[:notice] %>
       <div class="notification is-success global-notification">
@@ -38,6 +37,11 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="field is-grouped">
+
+            <%= link_to cart_path, class: "navbar-item button is-warning" do %>
+              <span class="icon"><i class="fa fa-shopping-cart"></i></span>
+              <span>(<%= @cart ? @cart.line_items.sum(:quantity) : 0 %>)</span>
+            <% end %>
 
             <% if user_signed_in? %>
               <%= link_to 'Sell', new_product_path, class: "navbar-item button is-dark" %>
