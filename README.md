@@ -121,5 +121,134 @@ CTRL + C
 * Webpacker functioning
 * Products index page loads correctly
 
+
+
+## System Dependencies
+
+Before running the project, make sure the following system packages are installed.
+
+### Ruby
+This project requires:
+
+Ruby 3.0.0
+
+Recommended installation using rbenv:
+
+```
+
+rbenv install 3.0.0
+rbenv global 3.0.0
+
+```
+
+Verify:
+
+```
+
+ruby -v
+
+```
+
+---
+
+### Node.js and Yarn
+Webpacker requires Node and Yarn.
+
+Install:
+
+```
+
+sudo apt install nodejs
+sudo apt install yarn
+
+```
+
+Verify:
+
+```
+
+node -v
+yarn -v
+
+```
+
+---
+
+### ImageMagick (required for image uploads)
+
+This project uses **CarrierWave + MiniMagick** to process uploaded images.
+
+MiniMagick requires the **ImageMagick system package**.
+
+Install:
+
+```
+
+sudo apt install imagemagick
+
+```
+
+Verify installation:
+
+```
+
+which convert
+convert -version
+
+```
+
+If ImageMagick is missing, image uploads will fail with the error:
+
+```
+
+Failed to manipulate with MiniMagick
+executable not found: "convert"
+
+```
+
+---
+
+## Project Setup
+
+Clone the project and install dependencies:
+
+```
+
+bundle install
+yarn install
+
+```
+
+Create and migrate the database:
+
+```
+
+DISABLE_SPRING=1 bin/rails db:create
+DISABLE_SPRING=1 bin/rails db:migrate
+
+```
+
+(Optional) Seed the database:
+
+```
+
+DISABLE_SPRING=1 bin/rails db:seed
+
+```
+
+Run the server:
+
+```
+
+DISABLE_SPRING=1 bin/rails s
+
+```
+
+Open:
+
+```
+
+[http://127.0.0.1:3000](http://127.0.0.1:3000)
+
 ```
 
