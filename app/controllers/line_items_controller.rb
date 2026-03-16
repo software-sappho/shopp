@@ -16,7 +16,11 @@ class LineItemsController < ApplicationController
 
   def destroy
     line_item = @cart.line_items.find(params[:id])
-    line_item.destroy
+    if line_item.quantity > 1
+      line_item.decrement!(:quantity)
+    else
+      line_item.destroy
+    end
 
     redirect_to cart_path, notice: "Removed from your cart"
   end
