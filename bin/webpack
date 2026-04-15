@@ -1,18 +1,5 @@
-#!/usr/bin/env ruby
+#!/bin/bash
 
-ENV["RAILS_ENV"] ||= ENV["RACK_ENV"] || "development"
-ENV["NODE_ENV"]  ||= "development"
-
-require "pathname"
-ENV["BUNDLE_GEMFILE"] ||= File.expand_path("../../Gemfile",
-  Pathname.new(__FILE__).realpath)
-
-require "bundler/setup"
-
-require "webpacker"
-require "webpacker/webpack_runner"
-
-APP_ROOT = File.expand_path("..", __dir__)
-Dir.chdir(APP_ROOT) do
-  Webpacker::WebpackRunner.run(ARGV)
-end
+# Use webpack directly from node_modules to bypass Ruby/Webpacker compatibility issues
+cd "$(dirname "$0")/.."
+exec ./node_modules/.bin/webpack "$@"
