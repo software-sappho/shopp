@@ -1,5 +1,22 @@
-#!/bin/bash
+#!/usr/bin/env ruby
 
-# Use webpack directly from node_modules to bypass Ruby/Webpacker compatibility issues
-cd "$(dirname "$0")/.."
-exec ./node_modules/.bin/webpack "$@"
+require "logger"
+ENV["RAILS_ENV"] ||= ENV["RACK_ENV"] || "development"
+ENV["NODE_ENV"]  ||= "development"
+
+# Fix for Node v17+ with Webpack 4
+ENV["NODE_OPTIONS"] ||= "--openssl-legacy-provider"
+
+require "pathname"
+ENV["BUNDLE_GEMFILE"] ||= File.expand_path("../../Gemfile",
+  Pathname.new(__FILE__).realpath)
+
+require "bundler/setup"
+
+require "webpacker"
+require "webpacker/webpack_runner"
+
+APP_ROOT = File.expand_path("..", __dir__)
+Dir.chdir(APP_ROOT) do
+  Webpacker::WebpackRunner.run(ARGV)
+end
